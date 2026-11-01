@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desi Basket – Fresh Groceries, Delivered</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#1f7a4c; --green-dark:#145236; --green-light:#e6f4ec;
+    --saffron:#ff9933; --saffron-light:#fff1e0; --red:#e4572e;
+    --cream:#fffaf2; --ink:#1d2b24; --muted:#5b6b62; --white:#ffffff;
+    --shadow:0 12px 30px rgba(20,82,54,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Poppins',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1150px;margin:0 auto;padding:0 20px}
+
+  /* ---------- Top strip & nav ---------- */
+  .strip{background:var(--green-dark);color:#fff;font-size:.85rem;text-align:center;padding:7px 12px}
+  .strip b{color:var(--saffron)}
+  nav{position:sticky;top:0;z-index:50;background:rgba(255,250,242,.92);backdrop-filter:blur(8px);border-bottom:1px solid #f0e6d6}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.35rem;color:var(--green-dark)}
+  .logo span{color:var(--saffron)}
+  .links{display:flex;gap:28px;font-weight:500;color:var(--muted)}
+  .links a:hover{color:var(--green)}
+  .btn{display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;font:600 1rem 'Poppins',sans-serif;
+       padding:13px 26px;border-radius:50px;transition:transform .2s, box-shadow .2s}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-primary{background:var(--saffron);color:#fff;box-shadow:0 8px 20px rgba(255,153,51,.35)}
+  .btn-outline{background:#fff;color:var(--green-dark);border:2px solid var(--green)}
+  nav .btn{padding:9px 20px;font-size:.92rem}
+
+  /* ---------- Hero ---------- */
+  .hero{position:relative;padding:70px 0 90px;overflow:hidden}
+  .hero::before{content:"";position:absolute;width:620px;height:620px;border-radius:50%;
+    background:radial-gradient(circle,var(--saffron-light) 0%,transparent 70%);right:-160px;top:-120px;z-index:0}
+  .hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+  .tag{display:inline-block;background:var(--green-light);color:var(--green);font-weight:600;font-size:.85rem;
+       padding:6px 14px;border-radius:30px;margin-bottom:18px}
+  h1{font-size:3.1rem;line-height:1.15;font-weight:800;color:var(--green-dark)}
+  h1 .hl{color:var(--saffron);position:relative}
+  .hero p.lead{font-size:1.1rem;color:var(--muted);margin:18px 0 30px;max-width:520px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+  .stats{display:flex;gap:34px;margin-top:38px}
+  .stats div b{display:block;font-size:1.6rem;color:var(--green-dark)}
+  .stats div{font-size:.88rem;color:var(--muted)}
+  .hero-art{position:relative}
+  .hero-art svg{width:100%;height:auto;filter:drop-shadow(0 25px 30px rgba(20,82,54,.18))}
+  .bubble{position:absolute;background:#fff;border-radius:18px;padding:12px 16px;box-shadow:var(--shadow);
+          font-size:.88rem;font-weight:500;animation:float 4s ease-in-out infinite}
+  .bubble.b1{top:6%;left:-4%}
+  .bubble.b2{top:44%;right:-4%;animation-delay:1.5s;background:var(--green);color:#fff}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+  /* ---------- Sections ---------- */
+  section{padding:80px 0}
+  .sec-head{text-align:center;max-width:640px;margin:0 auto 48px}
+  .sec-head h2{font-size:2.2rem;color:var(--green-dark);line-height:1.2}
+  .sec-head p{color:var(--muted);margin-top:10px}
+
+  .features{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  .card{background:#fff;border-radius:22px;padding:28px 22px;box-shadow:var(--shadow);transition:transform .25s}
+  .card:hover{transform:translateY(-6px)}
+  .icon{width:60px;height:60px;border-radius:18px;display:grid;place-items:center;margin-bottom:16px}
+  .card h3{font-size:1.1rem;margin-bottom:6px}
+  .card p{font-size:.92rem;color:var(--muted)}
+
+  .cats{background:var(--green-light)}
+  .cat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:18px}
+  .cat{background:#fff;border-radius:20px;padding:22px 10px;text-align:center;font-weight:600;font-size:.95rem;
+       box-shadow:0 6px 16px rgba(20,82,54,.08);transition:transform .2s}
+  .cat:hover{transform:scale(1.05)}
+  .cat svg{display:block;width:70px;height:70px;margin:0 auto 10px}
+
+  /* ---------- Chatbot showcase ---------- */
+  .bot{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+  .phone{background:var(--ink);border-radius:38px;padding:14px;max-width:340px;margin:0 auto;box-shadow:0 30px 60px rgba(0,0,0,.25)}
+  .screen{background:#f4f7f5;border-radius:28px;overflow:hidden}
+  .screen-top{background:var(--green);color:#fff;padding:16px;display:flex;align-items:center;gap:10px;font-weight:600}
+  .screen-top .dot{width:34px;height:34px;border-radius:50%;background:var(--saffron);display:grid;place-items:center}
+  .msgs{padding:16px;display:flex;flex-direction:column;gap:10px;min-height:330px}
+  .m{max-width:82%;padding:10px 14px;border-radius:16px;font-size:.86rem}
+  .m.u{align-self:flex-end;background:var(--saffron);color:#fff;border-bottom-right-radius:4px}
+  .m.b{align-self:flex-start;background:#fff;border-bottom-left-radius:4px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 28px}
+  .chip{background:#fff;border:2px solid var(--green-light);color:var(--green-dark);padding:8px 16px;border-radius:30px;
+        font:500 .9rem 'Poppins',sans-serif;cursor:pointer;transition:all .2s}
+  .chip:hover{background:var(--green);color:#fff;border-color:var(--green)}
+  .bot h2{font-size:2.2rem;color:var(--green-dark);line-height:1.2}
+  .bot p{color:var(--muted);margin-top:12px}
+
+  /* ---------- Cities ---------- */
+  .cities{display:flex;justify-content:center;flex-wrap:wrap;gap:16px}
+  .city{display:flex;align-items:center;gap:10px;background:#fff;padding:14px 24px;border-radius:50px;
+        box-shadow:var(--shadow);font-weight:600}
+  .city i{width:12px;height:12px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px var(--green-light)}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--green-dark);color:#cfe3d7;padding:46px 0 28px;font-size:.9rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px}
+  footer .logo{color:#fff}
+  .disclaimer{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,255,255,.15);text-align:center;font-size:.82rem;opacity:.85}
+
+  .toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(120px);background:var(--ink);color:#fff;
+         padding:12px 22px;border-radius:30px;font-size:.9rem;z-index:2000;transition:transform .35s,opacity .35s;opacity:0;pointer-events:none}
+  .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+  /* ---------- Dialogflow Messenger theme ---------- */
+  df-messenger{
+    --df-messenger-bot-message:#ffffff;
+    --df-messenger-button-titlebar-color:#1f7a4c;
+    --df-messenger-chat-background-color:#f4f7f5;
+    --df-messenger-font-color:#1d2b24;
+    --df-messenger-send-icon:#ff9933;
+    --df-messenger-user-message:#ffe2c2;
+    z-index:999;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:900px){
+    .hero .wrap,.bot{grid-template-columns:1fr}
+    .features{grid-template-columns:repeat(2,1fr)}
+    .cat-grid{grid-template-columns:repeat(3,1fr)}
+    h1{font-size:2.3rem}
+    .links{display:none}
+    .hero-art{max-width:420px;margin:0 auto}
+  }
+  @media (max-width:520px){
+    .features{grid-template-columns:1fr}
+    .stats{gap:20px}
+    section{padding:60px 0}
+    .bubble.b1{left:0}
+    .bubble{font-size:.78rem;padding:9px 12px}
+    .bubble.b2{top:auto;bottom:0;right:0}
+  }
+</style>
+</head>
+<body>
+
+<div class="strip">Free delivery above <b>Rs 499</b> &nbsp;|&nbsp; Same-day delivery on orders before <b>2 pm</b></div>
+
+<nav>
+  <div class="wrap">
+    <a href="#" class="logo">
+      <svg width="38" height="38" viewBox="0 0 64 64" aria-hidden="true">
+        <circle cx="32" cy="32" r="30" fill="#1f7a4c"/>
+        <path d="M14 28h36l-4 20a4 4 0 0 1-4 3H22a4 4 0 0 1-4-3z" fill="#ff9933"/>
+        <path d="M22 28l8-12M42 28l-8-12" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+        <path d="M24 36v8M32 36v8M40 36v8" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      Desi<span>Basket</span>
+    </a>
+    <div class="links">
+      <a href="#why">Why us</a><a href="#shop">Shop</a><a href="#assistant">Assistant</a><a href="#cities">Cities</a>
+    </div>
+    <button class="btn btn-primary" onclick="openChat()">Chat with us</button>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <span class="tag">Meet Basket Buddy, our AI assistant</span>
+      <h1>Farm-fresh groceries, <span class="hl">delivered today.</span></h1>
+      <p class="lead">Fruits, vegetables, dairy and daily staples at your door in Pune, Mumbai, Lavasa and Hinjewadi. Questions about delivery, returns or payments? Ask our chatbot anytime, 24×7.</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary" onclick="openChat()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>
+          Ask Basket Buddy
+        </button>
+        <a class="btn btn-outline" href="#shop">Explore categories</a>
+      </div>
+      <div class="stats">
+        <div><b>2 hrs</b>avg. delivery</div>
+        <div><b>5,000+</b>products</div>
+        <div><b>24×7</b>AI support</div>
+      </div>
+    </div>
+
+    <div class="hero-art">
+      <div class="bubble b1">Hi! Do you deliver to Pune?</div>
+      <div class="bubble b2">Yes! Same-day delivery before 2 pm.</div>
+      <!-- Original illustration: grocery basket with produce -->
+      <svg viewBox="0 0 500 440" role="img" aria-label="Basket full of fresh vegetables and fruits">
+        <ellipse cx="250" cy="405" rx="190" ry="22" fill="#145236" opacity=".12"/>
+        <!-- leaves / greens behind -->
+        <path d="M150 190c-30-70 10-130 40-140 5 50-5 100-40 140z" fill="#3fa36b"/>
+        <path d="M175 195c0-80 50-120 85-120-10 55-40 95-85 120z" fill="#2e8b57"/>
+        <path d="M330 185c40-60 95-60 115-45-30 35-70 50-115 45z" fill="#3fa36b"/>
+        <!-- carrot -->
+        <path d="M300 200 L395 90 Q405 82 410 95 L320 215z" fill="#ff8c1a"/>
+        <path d="M398 92l20-30M404 96l28-14M400 88l6-34" stroke="#2e8b57" stroke-width="7" stroke-linecap="round"/>
+        <path d="M340 160l12 8M360 135l12 8M378 113l10 7" stroke="#e06f00" stroke-width="4" stroke-linecap="round"/>
+        <!-- tomato -->
+        <circle cx="215" cy="200" r="52" fill="#e4572e"/>
+        <circle cx="198" cy="183" r="12" fill="#fff" opacity=".35"/>
+        <path d="M215 150l-14-10M215 150l14-12M215 150v-16M215 150l-20 4M215 150l20 4" stroke="#2e8b57" stroke-width="6" stroke-linecap="round"/>
+        <!-- eggplant -->
+        <ellipse cx="290" cy="215" rx="34" ry="58" fill="#6b3fa0" transform="rotate(-25 290 215)"/>
+        <path d="M312 160c10-14 26-14 32-6-10 2-20 8-26 16z" fill="#2e8b57"/>
+        <!-- banana -->
+        <path d="M120 230c20 40 80 50 120 30-40 0-90-10-110-50z" fill="#ffd23f"/>
+        <!-- basket -->
+        <path d="M80 235h340l-36 150a20 20 0 0 1-19 15H135a20 20 0 0 1-19-15z" fill="#d98c3a"/>
+        <path d="M80 235h340l-6 26H86z" fill="#b86f24"/>
+        <g stroke="#b86f24" stroke-width="5" opacity=".75">
+          <path d="M125 270l20 120M175 270l10 120M225 270v120M275 270v120M325 270l-10 120M375 270l-20 120"/>
+          <path d="M100 300h300M108 335h284M116 368h268"/>
+        </g>
+        <!-- handle -->
+        <path d="M120 235c0-120 260-120 260 0" fill="none" stroke="#8a5320" stroke-width="12" stroke-linecap="round"/>
+        <!-- tag -->
+        <rect x="350" y="300" width="96" height="44" rx="12" fill="#1f7a4c"/>
+        <text x="398" y="328" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="17" fill="#fff">FRESH</text>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- ================= WHY US ================= -->
+<section id="why">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Why customers love Desi Basket</h2>
+      <p>Simple promises, kept every day. Basket Buddy can answer questions about each of these.</p>
+    </div>
+    <div class="features">
+      <div class="card">
+        <div class="icon" style="background:var(--saffron-light)">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ff9933" stroke-width="2"><rect x="1" y="7" width="13" height="10" rx="1"/><path d="M14 10h4l3 3v4h-7"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+        </div>
+        <h3>Same-day delivery</h3><p>Order before 2 pm and get it today. Later orders arrive by 11 am tomorrow.</p>
+      </div>
+      <div class="card">
+        <div class="icon" style="background:var(--green-light)">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1f7a4c" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg>
+        </div>
+        <h3>Pay your way</h3><p>UPI, cards, net banking, and cash on delivery for orders under Rs 2,000.</p>
+      </div>
+      <div class="card">
+        <div class="icon" style="background:#fde8e3">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#e4572e" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+        </div>
+        <h3>Easy returns</h3><p>Damaged or wrong item? Return it within 48 hours for a full refund.</p>
+      </div>
+      <div class="card">
+        <div class="icon" style="background:#efe7fa">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#6b3fa0" stroke-width="2"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8 11h.01M12 11h.01M16 11h.01" stroke-width="3" stroke-linecap="round"/></svg>
+        </div>
+        <h3>24×7 AI assistant</h3><p>Basket Buddy answers questions instantly and connects you to a person when needed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CATEGORIES ================= -->
+<section id="shop" class="cats">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Shop by category</h2>
+      <p>Fresh stock every morning from farms around Maharashtra.</p>
+    </div>
+    <div class="cat-grid">
+      <div class="cat"><svg viewBox="0 0 64 64"><circle cx="32" cy="36" r="22" fill="#e4572e"/><path d="M32 14c-4-6-10-6-12-4M32 14c4-8 12-8 14-6" stroke="#2e8b57" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="25" cy="29" r="5" fill="#fff" opacity=".35"/></svg>Vegetables</div>
+      <div class="cat"><svg viewBox="0 0 64 64"><path d="M14 30c6 22 30 28 42 14-18 4-32-2-42-14z" fill="#ffd23f"/><path d="M14 30l-4-6" stroke="#8a5320" stroke-width="4" stroke-linecap="round"/><circle cx="40" cy="22" r="10" fill="#e4572e"/><path d="M40 12v-5" stroke="#2e8b57" stroke-width="3"/></svg>Fruits</div>
+      <div class="cat"><svg viewBox="0 0 64 64"><path d="M22 10h20v8l6 10v26a4 4 0 0 1-4 4H20a4 4 0 0 1-4-4V28l6-10z" fill="#e8f1fb" stroke="#3a7bd5" stroke-width="3"/><rect x="16" y="32" width="32" height="14" fill="#3a7bd5"/><text x="32" y="43" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" font-family="Poppins">MILK</text></svg>Dairy</div>
+      <div class="cat"><svg viewBox="0 0 64 64"><path d="M12 26h40l-4 28H16z" fill="#d98c3a"/><ellipse cx="32" cy="26" rx="20" ry="7" fill="#f3e3c3"/><g fill="#fff"><circle cx="24" cy="25" r="2"/><circle cx="31" cy="23" r="2"/><circle cx="38" cy="25" r="2"/><circle cx="28" cy="28" r="2"/><circle cx="36" cy="28" r="2"/></g></svg>Atta &amp; Rice</div>
+      <div class="cat"><svg viewBox="0 0 64 64"><circle cx="20" cy="40" r="12" fill="#e4572e"/><circle cx="44" cy="40" r="12" fill="#ffd23f"/><circle cx="32" cy="24" r="12" fill="#8b5e34"/><circle cx="29" cy="21" r="2" fill="#fff" opacity=".5"/></svg>Masala</div>
+      <div class="cat"><svg viewBox="0 0 64 64"><rect x="14" y="18" width="36" height="38" rx="6" fill="#ff9933"/><rect x="14" y="10" width="36" height="12" rx="4" fill="#e06f00"/><path d="M22 34h20M22 42h14" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg>Snacks</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHATBOT SHOWCASE ================= -->
+<section id="assistant">
+  <div class="wrap bot">
+    <div class="phone" aria-hidden="true">
+      <div class="screen">
+        <div class="screen-top">
+          <div class="dot">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><rect x="5" y="8" width="14" height="11" rx="3"/><circle cx="9.5" cy="13" r="1.5" fill="#ff9933"/><circle cx="14.5" cy="13" r="1.5" fill="#ff9933"/><rect x="11" y="3" width="2" height="5"/></svg>
+          </div>
+          Basket Buddy <small style="opacity:.8;font-weight:400;margin-left:auto">online</small>
+        </div>
+        <div class="msgs">
+          <div class="m b">Namaste! I can help with delivery, returns, payments and order tracking.</div>
+          <div class="m u">kab tak aayega mera order?</div>
+          <div class="m b">Orders before 2 pm are delivered the same day. After 2 pm, by 11 am tomorrow.</div>
+          <div class="m u">do you take gpay?</div>
+          <div class="m b">Yes! We accept UPI, cards, net banking and COD under Rs 2,000.</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <span class="tag">Powered by Google Dialogflow</span>
+      <h2>Ask Basket Buddy anything</h2>
+      <p>Our AI assistant understands English, Hinglish and everyday language. Tap a question below to copy it, then paste it into the chat window.</p>
+      <div class="chips">
+        <button class="chip">How long does delivery take?</button>
+        <button class="chip">Do you deliver to Bombay?</button>
+        <button class="chip">Is cash on delivery available?</button>
+        <button class="chip">Where is my order?</button>
+        <button class="chip">Can I return a damaged item?</button>
+        <button class="chip">minimum order kitna hai</button>
+        <button class="chip">I want to talk to a person</button>
+      </div>
+      <button class="btn btn-primary" onclick="openChat()">Open the chat</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CITIES ================= -->
+<section id="cities" style="padding-top:20px">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Now delivering in</h2>
+      <p>Not in your city yet? Ask Basket Buddy and we'll note your area.</p>
+    </div>
+    <div class="cities">
+      <div class="city"><i></i>Pune</div>
+      <div class="city"><i></i>Mumbai</div>
+      <div class="city"><i></i>Lavasa</div>
+      <div class="city"><i></i>Hinjewadi</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="logo">Desi<span style="color:var(--saffron)">Basket</span></div>
+      <p style="margin-top:8px;max-width:320px">Fresh groceries, honest prices, friendly AI support.</p>
+    </div>
+    <div>
+      <b style="color:#fff">Customer care</b><br>
+      1800-000-0000 (9 am – 9 pm)<br>
+      care@desibasket.example
+    </div>
+  </div>
+  <div class="wrap disclaimer" style="display:block">
+    Classroom demonstration for <b>AI in Data-Driven Decisions in Business</b> (BBA). Desi Basket is a fictional store; all policies, prices and contact details are invented.
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<!-- ================= DIALOGFLOW MESSENGER =================
+     Replace the agent-id below with the one from YOUR Dialogflow Messenger snippet
+     (Integrations > Dialogflow Messenger) if it is different. -->
+<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+  intent="WELCOME"
+  chat-title="Basket Buddy"
+  agent-id="b8352e99-0135-4f3c-8f8c-415f81cb6864"
+  language-code="en">
+</df-messenger>
+
+<script>
+  // Open the Dialogflow Messenger chat window from any button
+  function openChat(){
+    try{
+      const df = document.querySelector('df-messenger');
+      const icon = df && df.shadowRoot && df.shadowRoot.querySelector('#widgetIcon');
+      const chat = df && df.shadowRoot && df.shadowRoot.querySelector('df-messenger-chat');
+      const isOpen = chat && chat.getAttribute('opened') !== null;
+      if(icon && !isOpen){ icon.click(); return; }
+      if(isOpen) return;
+    }catch(e){}
+    showToast('Click the round chat button at the bottom-right to start');
+  }
+
+  function showToast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(window._tt); window._tt = setTimeout(()=>t.classList.remove('show'), 2600);
+  }
+
+  // Sample-question chips: copy the question, then open the chat
+  document.querySelectorAll('.chip').forEach(c=>{
+    c.addEventListener('click', ()=>{
+      const q = c.textContent;
+      const done = ()=>{ showToast('Copied: "'+q+'" — paste it into the chat'); openChat(); };
+      if(navigator.clipboard){ navigator.clipboard.writeText(q).then(done, done); } else { done(); }
+    });
+  });
+</script>
+</body>
+</html>
